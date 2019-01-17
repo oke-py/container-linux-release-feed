@@ -12,11 +12,11 @@ const req = https.get(URL, (res) => {
   });
 
   res.on('end', (res) => {
-    res = JSON.parse(body);
+    const releases = JSON.parse(body);
     let latest;
-    for (latest in res) break;
+    for (latest in releases) break;
     console.log(latest);
-    console.log(res[latest]);
+    console.log(releases[latest]);
   });
 });
 
