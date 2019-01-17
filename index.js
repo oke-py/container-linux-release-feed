@@ -13,7 +13,10 @@ const req = https.get(URL, (res) => {
 
   res.on('end', (res) => {
     res = JSON.parse(body);
-    console.log(res);
+    let latest;
+    for (latest in res) break;
+    console.log(latest);
+    console.log(res[latest]);
   });
 });
 
