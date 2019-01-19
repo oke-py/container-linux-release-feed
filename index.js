@@ -3,6 +3,20 @@
 const https = require('https');
 const URL = 'https://coreos.com/releases/releases-stable.json';
 
+const isIn24Hours = (dateString) => {
+  console.log(dateString);
+  return true;
+};
+
+const hasSecurityFixes = (release_notes) => {
+  console.log(release_notes);
+  return true;
+}
+
+const postMessageToSlack = (version, release_notes) => {
+  console.log(`Container Linux ${version} has security fixes:\n${release_notes}`);
+}
+
 const req = https.get(URL, (res) => {
   let body = '';
   res.setEncoding('utf8');
@@ -15,8 +29,10 @@ const req = https.get(URL, (res) => {
     const releases = JSON.parse(body);
     let latest;
     for (latest in releases) break;
-    console.log(latest);
-    console.log(releases[latest]);
+    if (isIn24Hours(releases[latest]["release_date"])
+        && hasSecurityFixes(releases[latest]["release_notes"])) {
+      postMessageToSlack(latest, releases[latest]["release_notes"]);
+    }
   });
 });
 
