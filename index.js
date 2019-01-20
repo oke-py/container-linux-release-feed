@@ -9,8 +9,7 @@ const isIn24Hours = (dateString) => {
 };
 
 const hasSecurityFixes = (release_notes) => {
-  console.log(release_notes);
-  return true;
+  return ~release_notes.indexOf('Security fixes:');
 }
 
 const postMessageToSlack = (version, release_notes) => {
