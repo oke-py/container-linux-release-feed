@@ -1,7 +1,14 @@
 'use strict'
 
 const https = require('https');
-const URL = 'https://coreos.com/releases/releases-stable.json';
+
+const channel = process.env.CHANNEL || 'stable';
+if (! ['stable', 'beta', 'alpha'].includes(channel)) {
+  console.error('Invalid release channel');
+  process.exit(1);
+}
+
+const URL = `https://coreos.com/releases/releases-${channel}.json`;
 
 const isIn24Hours = (dateString) => {
   console.log(dateString);
