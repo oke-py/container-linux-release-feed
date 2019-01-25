@@ -19,8 +19,23 @@ const hasSecurityFixes = (release_notes) => {
   return ~release_notes.indexOf('Security fixes:');
 }
 
+const extractSecurityFixes = (release_notes) => {
+  const lines = release_notes.split("\n");
+  let security_fix = [];
+
+  for (let i = 0; i < lines.length; i++) {
+    if (! lines[i]) {
+      break;
+    }
+    security_fix.push(lines[i]);
+  }
+
+  return security_fix.join("\n");
+};
+
 const postMessageToSlack = (version, release_notes) => {
-  console.log(`Container Linux ${version} has security fixes:\n${release_notes}`);
+  const security_fix = extractSecurityFixes(release_notes);
+  console.log(`Container Linux ${version} has security fixes.\n${security_fix}`);
 }
 
 const req = https.get(URL, (res) => {
