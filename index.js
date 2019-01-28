@@ -53,6 +53,8 @@ const req = https.get(URL, (res) => {
     if (isIn24Hours(releases[latest]["release_date"])
         && hasSecurityFixes(releases[latest]["release_notes"])) {
       postMessageToSlack(latest, releases[latest]["release_notes"]);
+    } else {
+      console.log(`${channel} channel has no security fixes since ${latest}`);
     }
   });
 });
