@@ -1,6 +1,7 @@
 'use strict'
 
 const https = require('https');
+const dayjs = require('dayjs');
 
 const channel = process.env.CHANNEL || 'stable';
 if (! ['stable', 'beta', 'alpha'].includes(channel)) {
@@ -11,8 +12,8 @@ if (! ['stable', 'beta', 'alpha'].includes(channel)) {
 const URL = `https://coreos.com/releases/releases-${channel}.json`;
 
 const isIn24Hours = (dateString) => {
-  console.log(dateString);
-  return true;
+  const yesterday = dayjs().add(-1, 'day');
+  return dayjs(dateString).isAfter(yesterday);
 };
 
 const hasSecurityFixes = (release_notes) => {
