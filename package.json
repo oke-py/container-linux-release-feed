@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/oke-py/container-linux-release-feed/issues"
   },
-  "homepage": "https://github.com/oke-py/container-linux-release-feed#readme"
+  "homepage": "https://github.com/oke-py/container-linux-release-feed#readme",
+  "dependencies": {
+    "dayjs": "^1.8.0"
+  }
 }
