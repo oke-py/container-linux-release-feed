@@ -11,6 +11,10 @@ if (! ['stable', 'beta', 'alpha'].includes(channel)) {
 
 const URL = `https://coreos.com/releases/releases-${channel}.json`;
 
+const { IncomingWebhook } = require('@slack/client');
+const url = process.env.SLACK_WEBHOOK_URL;
+const webhook = new IncomingWebhook(url);
+
 const isIn24Hours = (dateString) => {
   const yesterday = dayjs().add(-1, 'day');
   return dayjs(dateString).isAfter(yesterday);
@@ -36,7 +40,13 @@ const extractSecurityFixes = (release_notes) => {
 
 const postMessageToSlack = (version, release_notes) => {
   const security_fix = extractSecurityFixes(release_notes);
-  console.log(`Container Linux ${version} has security fixes.\n${security_fix}`);
+  webhook.send(`Container Linux ${version} has security fixes.\n${security_fix}`, function(err, res) {
+    if (err) {
+        console.log('Error:', err);
+    } else {
+        console.log('Message sent: ', res);
+    }
+  });
 }
 
 const req = https.get(URL, (res) => {
