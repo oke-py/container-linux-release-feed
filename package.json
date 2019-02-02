@@ -4,6 +4,7 @@
   "description": "post Container Linux release feed to Slack",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint index.js src/*.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
