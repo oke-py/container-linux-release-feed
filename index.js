@@ -35,7 +35,7 @@ const req = https.get(URL, (res) => {
     body += chunk;
   });
 
-  res.on('end', (res) => {
+  res.on('end', () => {
     const releases = JSON.parse(body);
     let latest;
     for (latest in releases) break;
