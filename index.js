@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const https = require('https');
 const rd = require('./src/release-date');
@@ -20,12 +20,12 @@ const postMessageToSlack = (version, release_notes) => {
   const security_fix = rn.extractSecurityFixes(release_notes);
   webhook.send(`Container Linux ${version} has security fixes.\n${security_fix}`, function(err, res) {
     if (err) {
-        console.log('Error:', err);
+      console.log('Error:', err);
     } else {
-        console.log('Message sent: ', res);
+      console.log('Message sent: ', res);
     }
   });
-}
+};
 
 const req = https.get(URL, (res) => {
   let body = '';
@@ -39,9 +39,9 @@ const req = https.get(URL, (res) => {
     const releases = JSON.parse(body);
     let latest;
     for (latest in releases) break;
-    if (rd.isIn24Hours(releases[latest]["release_date"])
-        && rn.hasSecurityFixes(releases[latest]["release_notes"])) {
-      postMessageToSlack(latest, releases[latest]["release_notes"]);
+    if (rd.isIn24Hours(releases[latest]['release_date'])
+        && rn.hasSecurityFixes(releases[latest]['release_notes'])) {
+      postMessageToSlack(latest, releases[latest]['release_notes']);
     } else {
       console.log(`${channel} channel has no security fixes since ${latest}`);
     }

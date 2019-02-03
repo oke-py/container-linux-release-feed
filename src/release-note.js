@@ -7,7 +7,7 @@ module.exports = {
   },
       
   extractSecurityFixes (release_notes) {
-    const lines = release_notes.split("\n");
+    const lines = release_notes.split('\n');
     let security_fix = [];
   
     for (let i = 0; i < lines.length; i++) {
@@ -17,6 +17,6 @@ module.exports = {
       security_fix.push(lines[i]);
     }
       
-    return security_fix.join("\n");
+    return security_fix.join('\n');
   }      
 };
