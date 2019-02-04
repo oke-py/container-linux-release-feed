@@ -3,4 +3,5 @@ node_js:
   - 'stable'
   - 'lts/*'
 script:
+  - npm test
   - npm run lint

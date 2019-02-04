@@ -3,7 +3,7 @@
 module.exports = {
     
   hasSecurityFixes (release_notes) {
-    return ~release_notes.indexOf('Security fixes:');
+    return release_notes.indexOf('Security fixes:') !== -1;
   },
       
   extractSecurityFixes (release_notes) {
