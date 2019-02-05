@@ -16,8 +16,14 @@ describe('release note', function() {
   });
 
   describe('#extractSecurityFixes()', function() {
-    it('should retrieve only security fixes', function () {
+    it('should retrieve only security fixes', function() {
       assert.equal(rn.extractSecurityFixes('Security fixes:\n- foo\n- bar\n\nUpdates:\n- baz\n'), 'Security fixes:\n- foo\n- bar');
+    });
+  });
+
+  describe('#replaceLinkFormat()', function() {
+    it('should replace markdown link to slack link', function() {
+      assert.equal(rn.replaceLinkFormat('([CVE-2019-6486](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-6486))'), '(<https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-6486|CVE-2019-6486>)');
     });
   });
 });

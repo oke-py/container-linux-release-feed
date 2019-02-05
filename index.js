@@ -17,7 +17,7 @@ const url = process.env.SLACK_WEBHOOK_URL;
 const webhook = new IncomingWebhook(url);
 
 const postMessageToSlack = (version, release_notes) => {
-  const security_fix = rn.extractSecurityFixes(release_notes);
+  const security_fix = rn.replaceLinkFormat(rn.extractSecurityFixes(release_notes));
   webhook.send(`Container Linux ${version} has security fixes.\n${security_fix}`, function(err, res) {
     if (err) {
       console.log('Error:', err);

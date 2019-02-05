@@ -18,5 +18,9 @@ module.exports = {
     }
 
     return security_fix.join('\n');
+  },
+
+  replaceLinkFormat (md_link) {
+    return md_link.replace(/\[([A-Z0-9-]+)\]\(([^)]+)\)/g, '<$2|$1>');
   }
 };
