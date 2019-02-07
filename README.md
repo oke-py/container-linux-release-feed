@@ -27,3 +27,9 @@ $ npm install
 ```bash
 $ SLACK_WEBHOOK_URL=xxx CHANNEL=beta node index.js
 ```
+
+using docker image;
+
+```bash
+$ docker run -e SLACK_WEBHOOK_URL=xxx -e CHANNEL=beta okepy/container-linux-release-feed
+```
