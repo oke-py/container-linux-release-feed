@@ -2,25 +2,25 @@
 
 module.exports = {
 
-  hasSecurityFixes (release_notes) {
-    return release_notes.indexOf('Security fixes:') !== -1;
+  hasSecurityFixes (releaseNotes) {
+    return releaseNotes.indexOf('Security fixes:') !== -1;
   },
 
-  extractSecurityFixes (release_notes) {
-    const lines = release_notes.split('\n');
-    let security_fix = [];
+  extractSecurityFixes (releaseNotes) {
+    const lines = releaseNotes.split('\n');
+    let securityFix = [];
 
     for (let i = 0; i < lines.length; i++) {
       if (! lines[i]) {
         break;
       }
-      security_fix.push(lines[i]);
+      securityFix.push(lines[i]);
     }
 
-    return security_fix.join('\n');
+    return securityFix.join('\n');
   },
 
-  replaceLinkFormat (md_link) {
-    return md_link.replace(/\[([A-Z0-9-]+)\]\(([^)]+)\)/g, '<$2|$1>');
+  replaceLinkFormat (mdLink) {
+    return mdLink.replace(/\[([A-Z0-9-]+)\]\(([^)]+)\)/g, '<$2|$1>');
   }
 };

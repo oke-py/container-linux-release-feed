@@ -16,9 +16,9 @@ const { IncomingWebhook } = require('@slack/client');
 const url = process.env.SLACK_WEBHOOK_URL;
 const webhook = new IncomingWebhook(url);
 
-const postMessageToSlack = (version, release_notes) => {
-  const security_fix = rn.replaceLinkFormat(rn.extractSecurityFixes(release_notes));
-  webhook.send(`Container Linux ${version} has security fixes.\n${security_fix}`, function(err, res) {
+const postMessageToSlack = (version, releaseNotes) => {
+  const securityFix = rn.replaceLinkFormat(rn.extractSecurityFixes(releaseNotes));
+  webhook.send(`Container Linux ${version} has security fixes.\n${securityFix}`, function(err, res) {
     if (err) {
       console.log('Error:', err);
     } else {
