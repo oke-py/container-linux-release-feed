@@ -22,7 +22,9 @@
     "dayjs": "^1.8.0"
   },
   "devDependencies": {
+    "coveralls": "^3.0.3",
     "eslint": "^5.13.0",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "nyc": "^13.3.0"
   }
 }
