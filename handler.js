@@ -2,11 +2,12 @@
 
 module.exports.run = async (event, context) => {
   const https = require('https');
+  const feed = require('./src/feed');
   const rd = require('./src/release-date');
   const rn = require('./src/release-note');
 
   const channel = process.env.CHANNEL || 'stable';
-  if (! ['stable', 'beta', 'alpha'].includes(channel)) {
+  if (! feed.isValidChannel(channel)) {
     throw Error('Invalid release channel');
   }
 
@@ -30,6 +31,7 @@ module.exports.run = async (event, context) => {
   };
 
   const req = https.get(URL, (res) => {
+    console.info('start https.get');
     let body = '';
     res.setEncoding('utf8');
 
@@ -38,6 +40,7 @@ module.exports.run = async (event, context) => {
     });
 
     res.on('end', () => {
+      console.info('start res.on(end)');
       const releases = JSON.parse(body);
       let latest;
       for (latest in releases) break;

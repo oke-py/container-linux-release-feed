@@ -1,11 +1,12 @@
 'use strict';
 
 const https = require('https');
+const feed = require('./src/feed');
 const rd = require('./src/release-date');
 const rn = require('./src/release-note');
 
 const channel = process.env.CHANNEL || 'stable';
-if (! ['stable', 'beta', 'alpha'].includes(channel)) {
+if (! feed.isValidChannel(channel)) {
   console.error('Invalid release channel');
   process.exit(1);
 }
