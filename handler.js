@@ -8,7 +8,7 @@ module.exports.run = async (event, context) => {
 
   const channel = process.env.CHANNEL || 'stable';
   if (! feed.isValidChannel(channel)) {
-    throw Error('Invalid release channel');
+    throw new Error('Invalid release channel');
   }
 
   console.info(`start fetching ${channel} channel feed.`);
