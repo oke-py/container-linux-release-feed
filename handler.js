@@ -31,18 +31,19 @@ module.exports.run = async (event, context) => {
   const postMessageToSlack = (version, releaseNotes) => {
     const webhook = new IncomingWebhook(process.env.SLACK_WEBHOOK_URL);
     const securityFix = rn.replaceLinkFormat(rn.extractSecurityFixes(releaseNotes));
-    webhook.send(`Container Linux ${version} has security fixes.\n${securityFix}`, function(err, res) {
-      if (err) {
-        throw new Error(err);
-      } else {
-        console.log('Message sent: ', res);
-      }
+    const message = `Container Linux ${version} has security fixes.\n${securityFix}`;
+
+    console.info(`start posting notice to slack.\n${message}`);
+    return webhook.send(message).then((res) => {
+      console.info(res);
+    }).catch((error) => {
+      throw new Error(error);
     });
   };
 
   if (rd.isIn24Hours(releases[latest]['release_date'])
       && rn.hasSecurityFixes(releases[latest]['release_notes'])) {
-    postMessageToSlack(latest, releases[latest]['release_notes']);
+    await postMessageToSlack(latest, releases[latest]['release_notes']);
   } else {
     const message = `${channel} channel has no security fixes since ${latest}`;
     console.info(message);
