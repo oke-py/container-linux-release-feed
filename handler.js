@@ -46,8 +46,8 @@ module.exports.run = async (event, context) => {
   } else {
     const message = `${channel} channel has no security fixes since ${latest}`;
     console.info(message);
-    return {message, event};
+    return {message, event, context};
   }
 
-  return { message: 'executed successfully!', event };
+  return { message: 'executed successfully!', event, context };
 };
