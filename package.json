@@ -19,6 +19,7 @@
   "homepage": "https://github.com/oke-py/container-linux-release-feed#readme",
   "dependencies": {
     "@slack/client": "^4.8.0",
+    "axios": "^0.18.0",
     "dayjs": "^1.8.0"
   },
   "devDependencies": {

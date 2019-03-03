@@ -2,6 +2,7 @@
 
 module.exports.run = async (event, context) => {
   const https = require('https');
+  const axios = require('axios');
   const feed = require('./src/feed');
   const rd = require('./src/release-date');
   const rn = require('./src/release-note');
@@ -13,11 +14,8 @@ module.exports.run = async (event, context) => {
 
   console.info(`start fetching ${channel} channel feed.`);
 
-  const URL = `https://coreos.com/releases/releases-${channel}.json`;
-
   const { IncomingWebhook } = require('@slack/client');
-  const url = process.env.SLACK_WEBHOOK_URL;
-  const webhook = new IncomingWebhook(url);
+  const webhook = new IncomingWebhook(process.env.SLACK_WEBHOOK_URL);
 
   const postMessageToSlack = (version, releaseNotes) => {
     const securityFix = rn.replaceLinkFormat(rn.extractSecurityFixes(releaseNotes));
@@ -30,34 +28,27 @@ module.exports.run = async (event, context) => {
     });
   };
 
-  const req = https.get(URL, (res) => {
-    console.info('start https.get');
-    let body = '';
-    res.setEncoding('utf8');
+  const url = `https://coreos.com/releases/releases-${channel}.json`
+  const getFeed = async url => {
+    try {
+      const response = await axios.get(url)
+      const data = response.data;
+      return data;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
 
-    res.on('data', (chunk) => {
-      body += chunk;
-    });
-
-    res.on('end', () => {
-      console.info('start res.on(end)');
-      const releases = JSON.parse(body);
-      let latest;
-      for (latest in releases) break;
-      if (rd.isIn24Hours(releases[latest]['release_date'])
-          && rn.hasSecurityFixes(releases[latest]['release_notes'])) {
-        postMessageToSlack(latest, releases[latest]['release_notes']);
-      } else {
-        console.log(`${channel} channel has no security fixes since ${latest}`);
-      }
-    });
-  });
-
-  req.on('error', (e) => {
-    console.log(e.message);
-  });
-
-  req.end();
+  const releases = await getFeed(url);
+  let latest;
+  for (latest in releases) break;
+  console.info(releases[latest]);
+  if (rd.isIn24Hours(releases[latest]['release_date'])
+      && rn.hasSecurityFixes(releases[latest]['release_notes'])) {
+    postMessageToSlack(latest, releases[latest]['release_notes']);
+  } else {
+    console.info(`${channel} channel has no security fixes since ${latest}`);
+  }
 
   return { message: 'executed successfully!', event };
 };
