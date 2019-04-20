@@ -1,3 +1,3 @@
-const handler = require('./handler')
+const handler = require('./handler');
 
-handler.run(undefined, undefined)
+handler.run(undefined, undefined);
