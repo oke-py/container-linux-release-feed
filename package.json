@@ -1,6 +1,6 @@
 {
   "name": "container-linux-release-feed",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "post Container Linux release feed to Slack",
   "main": "index.js",
   "scripts": {
