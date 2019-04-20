@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports.run = async (event, context) => {
-  const { IncomingWebhook } = require('@slack/client');
+  const { IncomingWebhook } = require('@slack/webhook');
   const axios = require('axios');
   const feed = require('./src/feed');
   const rd = require('./src/release-date');
