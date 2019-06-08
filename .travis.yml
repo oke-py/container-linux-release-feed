@@ -1,8 +1,0 @@
-language: node_js
-node_js:
-  - 'stable'
-  - 'lts/*'
-script:
-  - $(npm bin)/nyc npm test && $(npm bin)/nyc report --reporter=text-lcov | $(npm bin)/coveralls
-  - npm run lint
-  - npm audit

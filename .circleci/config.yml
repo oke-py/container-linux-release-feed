@@ -22,7 +22,7 @@ jobs:
             - ./node_modules
       - run:
           name: npm-test
-          command: npm test
+          command: $(npm bin)/nyc npm test && $(npm bin)/nyc report --reporter=text-lcov | $(npm bin)/coveralls
       - run:
           name: npm-lint
           command: npm run lint
