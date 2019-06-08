@@ -1,7 +1,6 @@
 # container-linux-release-feed
 
 [![CircleCI](https://circleci.com/gh/oke-py/container-linux-release-feed.svg?style=svg)](https://circleci.com/gh/oke-py/container-linux-release-feed)
-[![Build Status](https://travis-ci.org/oke-py/container-linux-release-feed.svg?branch=master)](https://travis-ci.org/oke-py/container-linux-release-feed)
 [![Coverage Status](https://coveralls.io/repos/github/oke-py/container-linux-release-feed/badge.svg?branch=master)](https://coveralls.io/github/oke-py/container-linux-release-feed?branch=master)
 
 post Container Linux release feed to Slack
