@@ -49,8 +49,9 @@ provider:
       Resource: "arn:aws:logs:*:*:*"
 
 # you can define service wide environment variables here
-#  environment:
-#    variable1: value1
+  environment:
+    CHANNEL: stable
+    SLACK_WEBHOOK_URL: ${ssm:container-linux-security/dev/SLACK_WEBHOOK_URL}
 
 # you can add packaging information here
 #package:
