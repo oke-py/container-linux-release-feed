@@ -30,7 +30,7 @@ jobs:
           name: sls-deploy
           command: |
               if [ "${CIRCLE_BRANCH}" == "master" ]; then
-                sls deploy
+                sls deploy --stage prod
               else
-                echo "Not master branch so not deploying"
+                sls deploy --stage dev
               fi

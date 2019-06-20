@@ -20,26 +20,13 @@ service: container-linux-release-feed # NOTE: update this with your service name
 provider:
   name: aws
   runtime: nodejs10.x
+  logRetentionInDays: 14
 
 # you can overwrite defaults here
-  stage: dev
+  stage: ${opt:stage, "dev"}
   region: ap-northeast-1
 
 # you can add statements to the Lambda function's IAM Role here
-#  iamRoleStatements:
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:ListBucket"
-#      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:PutObject"
-#      Resource:
-#        Fn::Join:
-#          - ""
-#          - - "arn:aws:s3:::"
-#            - "Ref" : "ServerlessDeploymentBucket"
-#            - "/*"
   iamRoleStatements:
     - Effect: "Allow"
       Action:
@@ -51,7 +38,7 @@ provider:
 # you can define service wide environment variables here
   environment:
     CHANNEL: stable
-    SLACK_WEBHOOK_URL: ${ssm:/container-linux-security/dev/SLACK_WEBHOOK_URL}
+    SLACK_WEBHOOK_URL: ${ssm:/container-linux-security/${self:provider.stage}/SLACK_WEBHOOK_URL}
 
 # you can add packaging information here
 #package:
