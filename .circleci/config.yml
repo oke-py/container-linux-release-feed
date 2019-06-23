@@ -34,3 +34,38 @@ jobs:
               else
                 sls deploy --stage dev
               fi
+
+  vul-check:
+    docker:
+      - image: circleci/node
+    steps:
+      - checkout
+      - run:
+          name: update-npm
+          command: 'sudo npm install -g npm@latest'
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: install-npm
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: npm audit
+          command: npm audit
+
+commit-workflow:
+  jobs:
+    - build
+scheduled-workflow:
+  triggers:
+    - schedule:
+        cron: "0 1 * * *"
+        filters:
+          branches:
+            only: master
+
+  jobs:
+    - vul-check
