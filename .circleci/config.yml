@@ -6,28 +6,18 @@ jobs:
     steps:
       - checkout
       - run:
-          name: update-npm
+          name: update npm
           command: 'sudo npm install -g npm@latest'
+      - run: npm ci
       - run:
-          name: install-serverless
-          command: 'sudo npm install -g serverless'
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: install-npm
-          command: npm install
-      - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-          paths:
-            - ./node_modules
-      - run:
-          name: npm-test
+          name: npm test
           command: $(npm bin)/nyc npm test && $(npm bin)/nyc report --reporter=text-lcov | $(npm bin)/coveralls
+      - run: npm run lint
       - run:
-          name: npm-lint
-          command: npm run lint
+          name: install serverless
+          command: 'sudo npm install -g serverless'
       - deploy:
-          name: sls-deploy
+          name: sls deploy
           command: |
               if [ "${CIRCLE_BRANCH}" == "master" ]; then
                 sls deploy --stage prod
@@ -41,7 +31,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: update-npm
+          name: update npm
           command: 'sudo npm install -g npm@latest'
       - run: npm ci
       - run: npm audit
