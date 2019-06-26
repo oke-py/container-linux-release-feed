@@ -41,7 +41,7 @@ workflows:
   commit-workflow:
     jobs:
       - build
-  scheduled-workflow:
+  nightly:
     triggers:
       - schedule:
           cron: "0 16 * * *"
