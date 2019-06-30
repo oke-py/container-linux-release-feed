@@ -2,6 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/oke-py/container-linux-release-feed.svg?style=svg)](https://circleci.com/gh/oke-py/container-linux-release-feed)
 [![Coverage Status](https://coveralls.io/repos/github/oke-py/container-linux-release-feed/badge.svg?branch=master)](https://coveralls.io/github/oke-py/container-linux-release-feed?branch=master)
+[![Known Vulnerabilities](https://snyk.io//test/github/oke-py/container-linux-release-feed/badge.svg?targetFile=package.json)](https://snyk.io//test/github/oke-py/container-linux-release-feed?targetFile=package.json)
 
 post Container Linux release feed to Slack
 
