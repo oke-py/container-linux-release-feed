@@ -23,6 +23,10 @@ jobs:
       - checkout
       - aws-cli/setup
       - run:
+          name: update npm
+          command: 'sudo npm install -g npm@latest'
+      - run: npm ci
+      - run:
           name: install serverless
           command: 'sudo npm install -g serverless'
       - deploy:
