@@ -1,6 +1,9 @@
-version: 2
+version: 2.1
+orbs:
+  aws-cli: circleci/aws-cli@0.1.18
+
 jobs:
-  build:
+  test:
     docker:
       - image: circleci/node
     steps:
@@ -13,6 +16,11 @@ jobs:
           name: npm test
           command: $(npm bin)/nyc npm test && $(npm bin)/nyc report --reporter=text-lcov | $(npm bin)/coveralls
       - run: npm run lint
+  deploy:
+    docker:
+      - image: circleci/node
+    steps:
+      - checkout
       - run:
           name: install serverless
           command: 'sudo npm install -g serverless'
@@ -38,9 +46,13 @@ jobs:
 
 workflows:
   version: 2
-  commit-workflow:
+  build-test-and-deploy:
     jobs:
-      - build
+      - test
+      - deploy:
+          requires:
+            - test
+          context: aws-serverless
   nightly:
     triggers:
       - schedule:
